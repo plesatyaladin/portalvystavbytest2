@@ -1,0 +1,150 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "pba_sharedcommondataserviceforapps_fc344"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      },
+      "shared_commondataserviceforapps_1": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "pba_sharedcommondataserviceforapps_c43b3"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        }
+      },
+      "triggers": {
+        "When_a_row_is_added,_modified_or_deleted": {
+          "metadata": {
+            "operationMetadataId": "7e1af6a9-0508-40a6-abe5-885dd35df03d"
+          },
+          "type": "OpenApiConnectionWebhook",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "SubscribeWebhookTrigger",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "subscriptionRequest/message": 3,
+              "subscriptionRequest/entityname": "pba_projektbpf",
+              "subscriptionRequest/scope": 4,
+              "subscriptionRequest/filterexpression": "_activestageid_value eq 75115b1c-14bd-45c7-a7e0-5a8438176e7b"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        }
+      },
+      "actions": {
+        "Získej_projekt": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "e1c30eec-00f9-4283-8086-a53bd36ae920"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "GetItem",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "entityName": "pba_projekts",
+              "recordId": "@triggerOutputs()?['body/_bpf_pba_projektid_value']"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "List_rows": {
+          "runAfter": {
+            "Získej_projekt": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "42e6db6f-2e7d-4265-8c14-a39456832515"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps_1",
+              "operationId": "ListRecords",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "entityName": "pba_dokuments",
+              "$filter": "_pba_projekt_value eq @{outputs('Získej_projekt')?['body/pba_projektid']} and pba_kategorie eq '@{outputs('Získej_projekt')?['body/pba_name']} - Dokumentace pro Provedení Stavby'"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Condition": {
+          "actions": {},
+          "runAfter": {
+            "List_rows": [
+              "Succeeded"
+            ]
+          },
+          "else": {
+            "actions": {
+              "Add_a_new_row_-_Projektová_dokumentace": {
+                "runAfter": {},
+                "metadata": {
+                  "operationMetadataId": "024509ae-78a8-45a9-981f-c1d8bce7d6f9"
+                },
+                "type": "OpenApiConnection",
+                "inputs": {
+                  "host": {
+                    "connectionName": "shared_commondataserviceforapps",
+                    "operationId": "CreateRecord",
+                    "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                  },
+                  "parameters": {
+                    "entityName": "pba_dokuments",
+                    "item/pba_kategorie": "@{outputs('Získej_projekt')?['body/pba_name']} - Dokumentace pro Provedení Stavby",
+                    "item/pba_Projekt@odata.bind": "@outputs('Získej_projekt')?['body/@odata.id']",
+                    "item/pba_typ": 889910001
+                  },
+                  "authentication": "@parameters('$authentication')"
+                }
+              }
+            }
+          },
+          "expression": {
+            "greater": [
+              "@length(outputs('List_rows')?['body/value'])",
+              0
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "d34dea2e-4668-4590-b62a-5335938c6b06"
+          },
+          "type": "If"
+        }
+      },
+      "outputs": {}
+    },
+    "templateName": ""
+  },
+  "schemaVersion": "1.0.0.0"
+}
