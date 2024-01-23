@@ -77,7 +77,7 @@
             "operationMetadataId": "fd32252d-ce0b-4c51-b77b-aad6f65ca343"
           },
           "type": "Compose",
-          "inputs": "Hello"
+          "inputs": "HelloThere"
         }
       },
       "outputs": {}

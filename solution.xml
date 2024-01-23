@@ -1,11 +1,11 @@
 <ImportExportXml version="9.2.23122.190" SolutionPackageVersion="9.2" languagecode="1029" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SolutionManifest>
-    <UniqueName>SolutionForGitHubTest</UniqueName>
+    <UniqueName>SolutionForGitHubTestUnmanagedUpdate</UniqueName>
     <LocalizedNames>
-      <LocalizedName description="SolutionForGitHubTest" languagecode="1029" />
+      <LocalizedName description="SolutionForGitHubTestUnmanagedUpdate" languagecode="1029" />
     </LocalizedNames>
     <Descriptions />
-    <Version>1.0.0.4</Version>
+    <Version>1.0.0.1</Version>
     <Managed>1</Managed>
     <Publisher>
       <UniqueName>Cr08cd3</UniqueName>
@@ -77,36 +77,12 @@
       </Addresses>
     </Publisher>
     <RootComponents>
-      <RootComponent type="1" schemaName="pba_ahoj" behavior="0" />
-      <RootComponent type="1" schemaName="pba_kia" behavior="0" />
       <RootComponent type="29" id="{e2f0b523-fd2a-ee11-bdf4-000d3adf794f}" behavior="0" />
-      <RootComponent type="29" id="{fd021ad7-722a-ee11-bdf4-000d3adf7d8e}" behavior="0" />
-      <RootComponent type="300" schemaName="pba_canvasappone_91111" behavior="0" />
     </RootComponents>
     <MissingDependencies>
       <MissingDependency>
-        <Required type="1" schemaName="pba_dokument" displayName="Dokument base" solution="Active" />
-        <Dependent type="29" displayName="ZZ - Projekt - Vytvoř DPS" id="{fd021ad7-722a-ee11-bdf4-000d3adf7d8e}" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="pba_pripominkovaniaschvalovani" displayName="Schvalování,připomínky,akceptace" solution="Active" />
+        <Required type="29" displayName="ZZ - Projekt - Vytvoření dokumentace" solution="SolutionForGitHubTest (1.0.0.4)" id="{e2f0b523-fd2a-ee11-bdf4-000d3adf794f}" />
         <Dependent type="29" displayName="ZZ - Projekt - Vytvoření dokumentace" id="{e2f0b523-fd2a-ee11-bdf4-000d3adf794f}" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="pba_projekt" displayName="Projekt" solution="Active" />
-        <Dependent type="29" displayName="ZZ - Projekt - Vytvoření dokumentace" id="{e2f0b523-fd2a-ee11-bdf4-000d3adf794f}" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="pba_projekt" displayName="Projekt" solution="Active" />
-        <Dependent type="29" displayName="ZZ - Projekt - Vytvoř DPS" id="{fd021ad7-722a-ee11-bdf4-000d3adf7d8e}" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="pba_projektbpf" displayName="Projekt BPF" solution="Active" />
-        <Dependent type="29" displayName="ZZ - Projekt - Vytvoř DPS" id="{fd021ad7-722a-ee11-bdf4-000d3adf7d8e}" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="66" schemaName="MscrmControls.Canvas.CanvasControl" displayName="MscrmControls.Canvas.CanvasControl" solution="BaseCustomControlsCore (9.0.2312.2025)" />
-        <Dependent type="60" displayName="Informace" parentDisplayName="kia" id="{74023ebe-a611-489b-9270-7298feb00e1a}" />
       </MissingDependency>
     </MissingDependencies>
   </SolutionManifest>
